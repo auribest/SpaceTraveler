@@ -7,6 +7,7 @@ UFO.
 
 
 # Imports
+import math
 import numpy as np
 from random import randint
 
@@ -32,7 +33,6 @@ class UFO:
         print('## The ship is moving\n')
 
         while True:
-
             # Initialize the unaltered ufo step per iteration (+1 in x- and y-axis direction)
             travel_course = np.array([1, 1])
 
@@ -100,21 +100,27 @@ class UFO:
         """
         Calculates the current closest planet to the ufo.
 
-        :return: (numpy array) The distance vector from the ufo to the planet.
+        :return: (numpy array) The direction vector from the ufo to the closest planet.
         """
-        # Calculate the distance vectors by subtracting the ufo's coordinates from the planet's coordinates
-        distance_vectors = np.empty((self.space.n_planets, 2))
+        # Calculate the direction vectors by subtracting the ufo's coordinates from the planet's coordinates
+        direction_vectors = np.empty((self.space.n_planets, 2))
         for cnt in range(0, self.space.n_planets):
-            distance_vectors[cnt] = np.subtract(self.space.planets[cnt], self.coordinates)
+            direction_vectors[cnt] = np.subtract(self.space.planets[cnt], self.coordinates)
 
-        # Add all vector values with each other and divide by two to get their average value: (x + y) / 2
+        # Calculate the distance of each planet to the ufo with the following formula: √[(x2 - x1)² + (y2 - y1)²]
         distances = np.empty((self.space.n_planets, 1))
-        for cnt in range(0, len(distance_vectors)):
-            distances[cnt] = int((abs(distance_vectors[cnt][0]) + abs(distance_vectors[cnt][1])) / 2)
+        for cnt in range(0, len(direction_vectors)):
+            distances[cnt] = \
+                float(
+                    math.sqrt(
+                        (self.space.planets[cnt][0] - self.coordinates[0])**2 +
+                        (self.space.planets[cnt][1] - self.coordinates[1])**2
+                    )
+                )
 
-        # Look for the closest planet by checking for the smallest average distance value
+        # Look for the closest planet by checking for the smallest distance value
         min_distance_index = np.argmin(distances)
-        min_distance_vector = distance_vectors[min_distance_index]
+        min_distance_vector = direction_vectors[min_distance_index]
 
         # Informational print
         print('## The current closest planet is:\n', self.space.planets[min_distance_index], '\n')
