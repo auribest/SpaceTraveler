@@ -78,8 +78,9 @@ def plot_trajectory(space, ufo):
     plt.setp(ax.get_yticklabels(), fontsize='x-small')
 
     # Add a custom legend
-    legend_elements = [lines.Line2D([0], [0], marker='o', color='w', label='Planets', markerfacecolor='royalblue', markersize=10),
-                       lines.Line2D([0], [0], color='firebrick', lw=2, label='UFO Trajectory')]
+    legend_elements = \
+        [lines.Line2D([0], [0], marker='o', color='w', label='Planets', markerfacecolor='royalblue', markersize=10),
+         lines.Line2D([0], [0], color='firebrick', lw=2, label='UFO Trajectory')]
     ax.legend(handles=legend_elements, loc='best')
 
     # Add a grid
