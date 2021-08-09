@@ -7,7 +7,7 @@ Space.
 
 
 import numpy as np
-from planet import Planet
+from src.planet import Planet
 
 
 class Space:

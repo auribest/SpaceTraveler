@@ -1,0 +1,7 @@
+{
+  "__max_coordinate__": "(int) The largest possible coordinate in x-axis and y-axis direction.",
+  "max_coordinate": 25,
+
+  "__n_planets__": "(int) The number of planets generated in space.",
+  "n_planets": 10
+}

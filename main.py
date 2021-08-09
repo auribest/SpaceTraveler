@@ -8,12 +8,12 @@ SpaceTraveler.
 
 from src.space import Space
 from src.ufo import UFO
+from src.utils import read_json_config
 from src.utils import plot_trajectory
 
 
 if __name__ == '__main__':
-    max_coordinate = 20
-    n_planets = 15
+    max_coordinate, n_planets = read_json_config()
 
     space = Space(max_coordinate=max_coordinate, n_planets=n_planets)
 

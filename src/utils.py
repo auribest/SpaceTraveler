@@ -6,9 +6,38 @@ Utils.
 """
 
 
+import os
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as lines
+
+
+def read_json_config():
+    """
+    Loads and returns a set of configuration parameters from a JSON file.
+
+    :return: (tuple) Maximum possible coordinate in space (int) and the number of planets in space (int).
+    """
+    print('## Configuration parameters are being read from JSON')
+
+    # Set the configuration path
+    config_dir = 'config/'
+
+    # Check if config file exists
+    if not os.path.isfile(config_dir + 'config.json'):
+        raise FileNotFoundError('No JSON config file found!')
+
+    # Open JSON file, load config parameters and close file
+    file = open(os.path.join(config_dir + 'config.json'), 'r')
+    config = json.load(file)
+    file.close()
+
+    # Get the maximum coordinate and the amount of planets
+    max_coordinate = config.get('max_coordinate')
+    n_planets = config.get('n_planets')
+
+    return max_coordinate, n_planets
 
 
 def plot_trajectory(space, ufo):
