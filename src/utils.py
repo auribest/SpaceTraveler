@@ -56,24 +56,36 @@ def plot_trajectory(space, ufo):
 
     # Create a matplotlib scatter-plot with the planet's coordinates
     fig, ax = plt.subplots()
-    ax.scatter(space.planets[:, 0], space.planets[:, 1])
+    ax.scatter(space.planets[:, 0], space.planets[:, 1], c='royalblue')
 
-    # Set the x- and y-axis limits with the maximum defined coordinate
+    # Plot the ufo's trajectory line
+    line = lines.Line2D(ufo.history[:, 0], ufo.history[:, 1], color='firebrick')
+    ax.add_line(line)
+
+    # Set plot title
+    ax.set_title('SpaceTraveler Trajectory')
+
+    # Set the x- and y-axis labels and limits according to the maximum defined coordinate
+    ax.set_xlabel('x-axis')
+    ax.set_ylabel('y-axis')
     plt.xlim((0, space.max_coordinate + 1))
     plt.ylim((0, space.max_coordinate + 1))
 
-    # Show all x- and y-axis ticks
+    # Show all x- and y-axis ticks and reduce font size them to avoid overlap
     ax.set_xticks(np.arange(space.max_coordinate + 1))
     ax.set_yticks(np.arange(space.max_coordinate + 1))
+    plt.setp(ax.get_xticklabels(), fontsize='x-small')
+    plt.setp(ax.get_yticklabels(), fontsize='x-small')
+
+    # Add a custom legend
+    legend_elements = [lines.Line2D([0], [0], marker='o', color='w', label='Planets', markerfacecolor='royalblue', markersize=10),
+                       lines.Line2D([0], [0], color='firebrick', lw=2, label='UFO Trajectory')]
+    ax.legend(handles=legend_elements, loc='best')
 
     # Add a grid
     plt.grid()
 
-    # Plot the ufo's trajectory line
-    line = lines.Line2D(ufo.history[:, 0], ufo.history[:, 1], color='red')
-    ax.add_line(line)
-
-    # Set the plots x- and y-axis proportion to be equal
+    # Set the plot's x- and y-axis proportion to be equal
     plt.gca().set_aspect('equal', adjustable='box')
 
     # Show the plot
