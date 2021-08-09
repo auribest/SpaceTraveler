@@ -3,6 +3,9 @@
 ## General
 A UFO traveling through space while its trajectory is influenced by the nearest planet.
 
+The UFO starts at the position (0/0) and tries to leave space by traveling diagonally (+1 in each axis direction per step).
+The nearest planet will always influence the UFO's trajectory each step, by pulling the UFO towards the planet's direction.
+
 The goal is to leave space without crashing into any planet.
 
 ## Execution from root folder ('SpaceTraveler/'):
