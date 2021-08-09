@@ -29,7 +29,10 @@ class UFO:
         """
         Defines the ufo's trajectory and how it is influenced by the nearest planet.
         """
+        print('## The ship is moving\n')
+
         while True:
+
             # Initialize the unaltered ufo step per iteration (+1 in x- and y-axis direction)
             travel_course = np.array([1, 1])
 
@@ -56,19 +59,39 @@ class UFO:
             elif abs(min_distance_vector[0]) == abs(min_distance_vector[1]):
                 direction_index = randint(0, 1)
 
+            # Check and set the polarity (+ or -) of the course alternation: direction / |direction| = +1 or -1
+            polarity = min_distance_vector[direction_index] / abs(min_distance_vector[direction_index])
+
             # Initialize the unaltered course
             altered_course = [0, 0]
 
-            # Set the direction (x- or y-axis) in which the course will be altered
-            altered_course[direction_index] += 1
+            # Set the direction (x- or y-axis) and the polarity (+ or -) in which the course will be altered
+            altered_course[direction_index] += (1 * polarity)
 
             # Alter the course
             self.coordinates = np.add(self.coordinates, altered_course)
+
+            # Informational print
+            if direction_index == 0:
+                if polarity > 0:
+                    polarity = 'positive'
+                elif polarity < 0:
+                    polarity = 'negative'
+                print('## The course has been altered by one ', polarity, ' step in x-axis direction\n')
+            elif direction_index == 1:
+                if polarity > 0:
+                    polarity = 'positive'
+                elif polarity < 0:
+                    polarity = 'negative'
+                print('## The course has been altered by one ', polarity, ' step in y-axis direction\n')
 
             # Check if the ufo has crashed with a planet or escaped successfully
             end = self.check_end_journey()
             if end:
                 break
+
+            # Informational print
+            print('## Current UFO position: ', self.coordinates, '\n')
 
             # Add the new coordinates to the ufo's history
             self.history = np.concatenate((self.history, np.array([self.coordinates])), axis=0)
@@ -79,16 +102,22 @@ class UFO:
 
         :return: (numpy array) The distance vector from the ufo to the planet.
         """
+        # Calculate the distance vectors by subtracting the ufo's coordinates from the planet's coordinates
         distance_vectors = np.empty((self.space.n_planets, 2))
         for cnt in range(0, self.space.n_planets):
             distance_vectors[cnt] = np.subtract(self.space.planets[cnt], self.coordinates)
 
+        # Add all vector values with each other and divide by two to get their average value: (x + y) / 2
         distances = np.empty((self.space.n_planets, 1))
         for cnt in range(0, len(distance_vectors)):
             distances[cnt] = int((abs(distance_vectors[cnt][0]) + abs(distance_vectors[cnt][1])) / 2)
 
+        # Look for the closest planet by checking for the smallest average distance value
         min_distance_index = np.argmin(distances)
         min_distance_vector = distance_vectors[min_distance_index]
+
+        # Informational print
+        print('## The current closest planet is:\n', self.space.planets[min_distance_index], '\n')
 
         return min_distance_vector
 
@@ -101,14 +130,22 @@ class UFO:
         # Compare all planet coordinates with the ufo coordinates and if one matches, the ufo has crashed
         for planet in self.space.planets:
             if self.coordinates[0] == planet[0] and self.coordinates[1] == planet[1]:
+                # Add last known coordinates to the history
                 self.history = np.concatenate((self.history, np.array([self.coordinates])), axis=0)
-                print('Your ship has crashed!!!')
+
+                # Informational prints
+                print('## Your ship has crashed!!!\n')
+                print('## UFO trajectory blackbox:\n', self.history, '\n')
 
                 return True
 
         # If the coordinates are outside of space, the ufo escaped successfully
         if self.coordinates[0] > self.space.max_coordinate and self.coordinates[1] > self.space.max_coordinate:
+            # Add last known coordinates to the history
             self.history = np.concatenate((self.history, np.array([self.coordinates])), axis=0)
-            print('You have evaded all planets successfully!!!')
+
+            # Informational prints
+            print('## You have evaded all planets successfully!!!\n')
+            print('## UFO trajectory blackbox:\n', self.history, '\n')
 
             return True

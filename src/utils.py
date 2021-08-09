@@ -20,7 +20,7 @@ def read_json_config():
 
     :return: (tuple) Maximum possible coordinate in space (int) and the number of planets in space (int).
     """
-    print('## Configuration parameters are being read from JSON')
+    print('\n## Configuration parameters are being read from JSON')
 
     # Set the configuration path
     config_dir = 'config/'
@@ -38,6 +38,10 @@ def read_json_config():
     max_coordinate = config.get('max_coordinate')
     n_planets = config.get('n_planets')
 
+    # Informational prints
+    print('Space border in x- and y-axis direction: ', max_coordinate)
+    print('Number of planets in space: ', n_planets, '\n')
+
     return max_coordinate, n_planets
 
 
@@ -48,6 +52,8 @@ def plot_trajectory(space, ufo):
     :param space: (Space) The generated space object.
     :param ufo: (UFO) The generated ufo object.
     """
+    print('## UFO trajectory is being plotted')
+
     # Create a matplotlib scatter-plot with the planet's coordinates
     fig, ax = plt.subplots()
     ax.scatter(space.planets[:, 0], space.planets[:, 1])

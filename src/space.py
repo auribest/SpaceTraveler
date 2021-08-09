@@ -27,12 +27,17 @@ class Space:
         self.n_planets = n_planets
         self.planets = self.set_planets()
 
+        # Informational print
+        print('## Space has been created\n')
+
     def set_planets(self):
         """
         Generate the specified amount of planets in space.
 
         :return: (numpy array) All planet coordinates.
         """
+        print('## Planets are being generated')
+
         # Create an uninitialized numpy array with it's pre-defined dimensions
         planets = np.empty((self.n_planets, 2))
 
@@ -43,5 +48,8 @@ class Space:
             planet = Planet(planet_coordinates)
 
             planets[cnt] = planet.coordinates
+
+        # Informational print
+        print('All planet coordinates:\n', planets, '\n')
 
         return planets
