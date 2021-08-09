@@ -2,10 +2,11 @@
 Utils.
 
 @author         Andrés Uribe Stengel
-@lastModified   08.08.2021
+@lastModified   09.08.2021
 """
 
 
+# Imports
 import os
 import json
 import numpy as np
@@ -41,19 +42,33 @@ def read_json_config():
 
 
 def plot_trajectory(space, ufo):
+    """
+    Plots the ufo's trajectory on an n x n grid.
+
+    :param space: (Space) The generated space object.
+    :param ufo: (UFO) The generated ufo object.
+    """
+    # Create a matplotlib scatter-plot with the planet's coordinates
     fig, ax = plt.subplots()
     ax.scatter(space.planets[:, 0], space.planets[:, 1])
 
+    # Set the x- and y-axis limits with the maximum defined coordinate
     plt.xlim((0, space.max_coordinate + 1))
     plt.ylim((0, space.max_coordinate + 1))
+
+    # Show all x- and y-axis ticks
     ax.set_xticks(np.arange(space.max_coordinate + 1))
     ax.set_yticks(np.arange(space.max_coordinate + 1))
 
+    # Add a grid
     plt.grid()
 
+    # Plot the ufo's trajectory line
     line = lines.Line2D(ufo.history[:, 0], ufo.history[:, 1], color='red')
     ax.add_line(line)
 
+    # Set the plots x- and y-axis proportion to be equal
     plt.gca().set_aspect('equal', adjustable='box')
 
+    # Show the plot
     plt.show()
