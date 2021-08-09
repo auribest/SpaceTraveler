@@ -67,8 +67,14 @@ class Space:
         # Generate random coordinates
         planet_coordinates = np.random.randint(low=1, high=self.max_coordinate, size=2)
 
-        # If the coordinates are already in the array of planets, re-generate the random coordinates
-        if any(np.equal(planets, planet_coordinates).all(1)):
-            self.set_planet_coordinates(planets=planets)
+        # If the new coordinates already exist in the array of planets, re-generate the random coordinates
+        for cnt in range(0, self.n_planets):
+            # Create an array of bools showing the similarity of both arrays
+            comparison_array = planets[cnt] == planet_coordinates
+            # Create a final bool from the array of bools
+            equal_coordinates = comparison_array.all()
+            # If true, the coordinates are identical and the method is re-executed
+            if equal_coordinates:
+                self.set_planet_coordinates(planets=planets)
 
         return planet_coordinates
