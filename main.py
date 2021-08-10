@@ -16,8 +16,10 @@ def run():
     """
     Start the SpaceTraveler via user input.
     """
+    # User input
     user_input = input('\nType "s" to start, or anything else to quit: ')
 
+    # If user input is 's', start the application, else stop it
     if user_input == 's':
         # Read and set the user-defined parameters
         max_coordinate, n_planets = read_json_config()
@@ -34,6 +36,7 @@ def run():
         # Plot its trajectory when the ufo either successfully escapes or crashes
         plot_trajectory(space=space, ufo=ufo)
 
+        # Recursive call
         run()
     else:
         print('\n## Goodbye!\n')
