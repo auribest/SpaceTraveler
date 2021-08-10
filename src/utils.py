@@ -52,7 +52,10 @@ def plot_trajectory(space, ufo):
     :param space: (Space) The generated space object.
     :param ufo: (UFO) The generated ufo object.
     """
-    print('## UFO trajectory is being plotted')
+    print('## UFO trajectory is being plotted\n')
+
+    # Informational print
+    print('## Close the trajectory plot to play again.\n')
 
     # Create a matplotlib scatter-plot with the planet's coordinates
     fig, ax = plt.subplots()
@@ -63,7 +66,7 @@ def plot_trajectory(space, ufo):
     ax.add_line(line)
 
     # Set plot title
-    ax.set_title('SpaceTraveler Trajectory')
+    ax.set_title('SpaceTraveler')
 
     # Set the x- and y-axis labels and limits according to the maximum defined coordinate
     ax.set_xlabel('x-axis')

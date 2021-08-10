@@ -123,7 +123,7 @@ class UFO:
         min_distance_vector = direction_vectors[min_distance_index]
 
         # Informational print
-        print('## The current closest planet is:\n', self.space.planets[min_distance_index], '\n')
+        print('## The current closest planet is:', self.space.planets[min_distance_index], '\n')
 
         return min_distance_vector
 
@@ -140,8 +140,9 @@ class UFO:
                 self.history = np.concatenate((self.history, np.array([self.coordinates])), axis=0)
 
                 # Informational prints
-                print('## Your ship has crashed!!!\n')
+                print('## Current UFO position: ', self.coordinates, '\n')
                 print('## UFO trajectory blackbox:\n', self.history, '\n')
+                print('## Your ship has crashed!!!\n')
 
                 return True
 
@@ -151,7 +152,8 @@ class UFO:
             self.history = np.concatenate((self.history, np.array([self.coordinates])), axis=0)
 
             # Informational prints
-            print('## You have evaded all planets successfully!!!\n')
+            print('## Current UFO position: ', self.coordinates, '\n')
             print('## UFO trajectory blackbox:\n', self.history, '\n')
+            print('## You have evaded all planets successfully!!!\n')
 
             return True
