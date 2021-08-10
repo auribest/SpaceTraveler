@@ -2,7 +2,7 @@
 Utils.
 
 @author         Andrés Uribe Stengel
-@lastModified   09.08.2021
+@lastModified   10.08.2021
 """
 
 
@@ -45,28 +45,38 @@ def read_json_config():
     return max_coordinate, n_planets
 
 
-def plot_trajectory(space, ufo):
+def init_plot():
     """
-    Plots the ufo's trajectory on an n x n grid.
+    Draws an empty plot for later use.
 
-    :param space: (Space) The generated space object.
-    :param ufo: (UFO) The generated ufo object.
+    :return: (matplotlib) Visualisation objects of the empty plot.
     """
-    print('## UFO trajectory is being plotted\n')
-
-    # Informational print
-    print('## Close the trajectory plot to play again.\n')
-
-    # Create a matplotlib scatter-plot with the planet's coordinates
+    # Initialize a matplotlib plot
     fig, ax = plt.subplots()
-    ax.scatter(space.planets[:, 0], space.planets[:, 1], c='royalblue')
 
-    # Plot the ufo's trajectory line
-    line = lines.Line2D(ufo.history[:, 0], ufo.history[:, 1], color='firebrick')
-    ax.add_line(line)
+    return fig, ax
+
+
+def update_plot(canvas, ax, space, ufo):
+    """
+    Plots an n x n grid for the UFO's trajectory and the planet positions.
+
+    :param canvas: (tkinter) The canvas on which to draw.
+    :param ax: (matplotlib) The elements to be drawn on the canvas.
+    :param space: (Space) The generated space object.
+    :param ufo: (UFO) The generated UFO object.
+    """
+    # Clear the current canvas
+    ax.clear()
 
     # Set plot title
     ax.set_title('SpaceTraveler')
+
+    # Add a grid
+    plt.grid()
+
+    # Set the plot's x- and y-axis proportion to be equal
+    plt.gca().set_aspect('equal', adjustable='box')
 
     # Set the x- and y-axis labels and limits according to the maximum defined coordinate
     ax.set_xlabel('x-axis')
@@ -80,17 +90,18 @@ def plot_trajectory(space, ufo):
     plt.setp(ax.get_xticklabels(), fontsize='x-small')
     plt.setp(ax.get_yticklabels(), fontsize='x-small')
 
+    # Create a scatter-plot with the planet's coordinates
+    ax.scatter(space.planets[:, 0], space.planets[:, 1], c='royalblue')
+
+    # Plot the ufo's trajectory line
+    line = lines.Line2D(ufo.history[:, 0], ufo.history[:, 1], color='firebrick')
+    ax.add_line(line)
+
     # Add a custom legend
     legend_elements = \
         [lines.Line2D([0], [0], marker='o', color='w', label='Planets', markerfacecolor='royalblue', markersize=10),
          lines.Line2D([0], [0], color='firebrick', lw=2, label='UFO Trajectory')]
     ax.legend(handles=legend_elements, loc='best')
 
-    # Add a grid
-    plt.grid()
-
-    # Set the plot's x- and y-axis proportion to be equal
-    plt.gca().set_aspect('equal', adjustable='box')
-
-    # Show the plot
-    plt.show()
+    # Update the canvas
+    canvas.draw()

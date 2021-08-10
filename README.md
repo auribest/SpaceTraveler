@@ -22,7 +22,7 @@ Open the configuration file located under the directory 'SpaceTraveler/config/co
 
 ### Step 3
 
-Execute the main.py file from the root folder ('SpaceTraveler/') with following command and follow the commandline instructions to continue:
+Execute the main.py file from the root folder ('SpaceTraveler/') with following command:
 
 Linux: ``python3 ./main.py``
 
